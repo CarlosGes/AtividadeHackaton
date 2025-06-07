@@ -1,36 +1,31 @@
 package com.example.technova.dto;
 
 import com.example.technova.entity.ImagemProduto;
-import com.example.technova.entity.Produto;
 
 public class ImagemProdutoDto {
     private Long id;
     private String url_imagem;
-    private Produto produto;
 
     public ImagemProduto toImagemProduto(){
         return new ImagemProduto(
                 this.id,
-                this.url_imagem,
-                this.produto
+                this.url_imagem
         );
     }
 
     public ImagemProdutoDto fromImagemProduto(ImagemProduto imagemProduto){
         return new ImagemProdutoDto(
                 imagemProduto.getId(),
-                imagemProduto.getUrl_imagem(),
-                imagemProduto.getProduto()
+                imagemProduto.getUrl_imagem()
         );
     }
 
     public ImagemProdutoDto() {
     }
 
-    public ImagemProdutoDto(Long id, String url_imagem, Produto produto) {
+    public ImagemProdutoDto(Long id, String url_imagem) {
         this.id = id;
         this.url_imagem = url_imagem;
-        this.produto = produto;
     }
 
     public Long getId() {
@@ -49,11 +44,4 @@ public class ImagemProdutoDto {
         this.url_imagem = url_imagem;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
 }

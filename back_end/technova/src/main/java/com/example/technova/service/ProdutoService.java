@@ -23,8 +23,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Optional<ProdutoDto> getById(Long idProduto){
-        Optional<Produto> produtoOptional = produtoRepository.findById(idProduto);
+    public Optional<ProdutoDto> getById(Long id){
+        Optional<Produto> produtoOptional = produtoRepository.findById(id);
         if(produtoOptional.isPresent()){
             ProdutoDto produtoDto = new ProdutoDto();
             return Optional.of(produtoDto.fromProduto(produtoOptional.get()));
@@ -36,13 +36,17 @@ public class ProdutoService {
     //cadastro de produtos
     public ProdutoDto createProduto(ProdutoDto produtoDto){
         Produto produto = produtoDto.toProduto();
+
+        for (ImagemProduto imagem : produto.getImagens()){
+            imagem.setProduto(produto);
+        }
         produto = produtoRepository.save(produto);
         return produtoDto.fromProduto(produto);
     }
 
     //atualização de estoque
-    public Optional<ProdutoDto> updateProduto(Long idProduto, ProdutoDto produtoDto){
-        Optional<Produto> produtoOptional = produtoRepository.findById(idProduto);
+    public Optional<ProdutoDto> updateProduto(Long id, ProdutoDto produtoDto){
+        Optional<Produto> produtoOptional = produtoRepository.findById(id);
         if (produtoOptional.isPresent()){
             Produto produto = produtoOptional.get();
             produto.setQuantidade(produtoDto.getQuantidade());
@@ -56,9 +60,9 @@ public class ProdutoService {
     }
 
     //remoção de produto
-    public boolean delete(Long idProduto){
-        if (produtoRepository.existsById(idProduto)){
-            produtoRepository.deleteById(idProduto);
+    public boolean delete(Long id){
+        if (produtoRepository.existsById(id)){
+            produtoRepository.deleteById(id);
             return true;
         } else {
             return false;
@@ -67,8 +71,8 @@ public class ProdutoService {
 
 
     // gerenciar imagens do produto
-    public Optional<ProdutoDto> adicionarImagem(Long idProduto, String url_imagem) {
-        return produtoRepository.findById(idProduto)
+    public Optional<ProdutoDto> adicionarImagem(Long id, String url_imagem) {
+        return produtoRepository.findById(id)
                 .map(produto -> {
                     ImagemProduto novaImagem = new ImagemProduto();
                     novaImagem.setUrl_imagem(url_imagem);
@@ -79,8 +83,8 @@ public class ProdutoService {
                 });
     }
 
-    public Optional<Boolean> removerImagem(Long idProduto, String url_imagem) {
-        return produtoRepository.findById(idProduto)
+    public Optional<Boolean> removerImagem(Long id, String url_imagem) {
+        return produtoRepository.findById(id)
                 .map(produto -> {
                     boolean removido = produto.getImagens().remove(url_imagem);
                     if (removido) {

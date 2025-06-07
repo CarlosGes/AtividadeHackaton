@@ -1,9 +1,7 @@
 package com.example.technova.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,22 +11,30 @@ import java.util.List;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduto;
+    private Long id;
     private String nome;
+    @Column(name = "texto_descritivo", nullable = false)
     private String textoDescritivo;
     private String cor;
     private String fabricante;
     private double preco;
     private int quantidade;
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ImagemProduto> imagens = new ArrayList<>();
+
+
+    public void adicionarImagem(ImagemProduto imagem) {
+        imagem.setProduto(this);
+        this.imagens.add(imagem);
+    }
 
 
     public Produto() {
     }
 
-    public Produto(Long idProduto, String nome, String textoDescritivo, String cor, String fabricante, double preco, int quantidade, List<ImagemProduto> imagens) {
-        this.idProduto = idProduto;
+    public Produto(Long id, String nome, String textoDescritivo, String cor, String fabricante, double preco, int quantidade, List<ImagemProduto> imagens) {
+        this.id = id;
         this.nome = nome;
         this.textoDescritivo = textoDescritivo;
         this.cor = cor;
@@ -38,12 +44,12 @@ public class Produto {
         this.imagens = imagens;
     }
 
-    public Long getIdProduto() {
-        return idProduto;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdProduto(Long idProduto) {
-        this.idProduto = idProduto;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

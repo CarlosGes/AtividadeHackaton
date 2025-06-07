@@ -2,55 +2,69 @@ package com.example.technova.dto;
 
 import com.example.technova.entity.ImagemProduto;
 import com.example.technova.entity.Produto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProdutoDto {
-    private Long idProduto;
+    private Long id;
     private String nome;
     private String textoDescritivo;
     private String cor;
     private String fabricante;
     private double preco;
     private int quantidade;
-    private List<ImagemProduto> imagens = new ArrayList<>();
+    private List<ImagemProdutoDto> imagens;
 
 
     public Produto toProduto(){
-        return new Produto(
-                this.idProduto,
-                this.nome,
-                this.textoDescritivo,
-                this.cor,
-                this.fabricante,
-                this.preco,
-                this.quantidade,
-                this.imagens
-        );
+        Produto produto = new Produto();
+
+        produto.setNome(this.nome);
+        produto.setTextoDescritivo(this.textoDescritivo);
+        produto.setCor(this.cor);
+        produto.setFabricante(this.fabricante);
+        produto.setPreco(this.preco);
+        produto.setQuantidade(this.quantidade);
+
+        if (this.imagens != null) {
+            List<ImagemProduto> imagensList = new ArrayList<>();
+            for (ImagemProdutoDto imagemDto : this.imagens) {
+                ImagemProduto imagem = new ImagemProduto();
+                imagem.setUrl_imagem(imagemDto.getUrl_imagem());
+                imagem.setProduto(produto); // <-- ESSENCIAL
+                imagensList.add(imagem);
+            }
+            produto.setImagens(imagensList);
+        }
+
+        return produto;
     }
 
-    public ProdutoDto fromProduto(Produto produto){
+    public static ProdutoDto fromProduto(Produto produto) {
+        List<ImagemProdutoDto> imagensDto = produto.getImagens().stream()
+                .map(imagem -> new ImagemProdutoDto(imagem.getId(), imagem.getUrl_imagem()))
+                .collect(Collectors.toList());
+
         return new ProdutoDto(
-            produto.getIdProduto(),
+                produto.getId(),
                 produto.getNome(),
                 produto.getTextoDescritivo(),
                 produto.getCor(),
                 produto.getFabricante(),
                 produto.getPreco(),
                 produto.getQuantidade(),
-                produto.getImagens()
+                imagensDto
         );
     }
 
-    public ProdutoDto() {
-    }
 
-    public ProdutoDto(Long idProduto, String nome, String textoDescritivo, String cor, String fabricante, double preco, int quantidade, List<ImagemProduto> imagens) {
-        this.idProduto = idProduto;
+    public ProdutoDto() {}
+
+    public ProdutoDto(Long id, String nome, String textoDescritivo, String cor, String fabricante, double preco, int quantidade, List<ImagemProdutoDto> imagens) {
+        this.id = id;
         this.nome = nome;
         this.textoDescritivo = textoDescritivo;
         this.cor = cor;
@@ -60,53 +74,6 @@ public class ProdutoDto {
         this.imagens = imagens;
     }
 
-    public Long getIdProduto() {
-        return idProduto;
-    }
-
-    public void setIdProduto(Long idProduto) {
-        this.idProduto = idProduto;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTextoDescritivo() {
-        return textoDescritivo;
-    }
-
-    public void setTextoDescritivo(String textoDescritivo) {
-        this.textoDescritivo = textoDescritivo;
-    }
-
-    public String getCor() {
-        return cor;
-    }
-
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
-    public String getFabricante() {
-        return fabricante;
-    }
-
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
 
     public int getQuantidade() {
         return quantidade;
@@ -114,13 +81,5 @@ public class ProdutoDto {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public List<ImagemProduto> getImagens() {
-        return imagens;
-    }
-
-    public void setImagens(List<ImagemProduto> imagens) {
-        this.imagens = imagens;
     }
 }

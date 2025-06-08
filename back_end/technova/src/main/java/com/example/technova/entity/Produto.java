@@ -3,6 +3,7 @@ package com.example.technova.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +15,10 @@ public class Produto {
     private Long id;
     private String nome;
     @Column(name = "texto_descritivo", nullable = false)
-    private String textoDescritivo;
+    private String texto_descritivo;
     private String cor;
     private String fabricante;
-    private double preco;
+    private BigDecimal preco;
     private int quantidade;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -33,10 +34,10 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String textoDescritivo, String cor, String fabricante, double preco, int quantidade, List<ImagemProduto> imagens) {
+    public Produto(Long id, String nome, String texto_descritivo, String cor, String fabricante, BigDecimal preco, int quantidade, List<ImagemProduto> imagens) {
         this.id = id;
         this.nome = nome;
-        this.textoDescritivo = textoDescritivo;
+        this.texto_descritivo = texto_descritivo;
         this.cor = cor;
         this.fabricante = fabricante;
         this.preco = preco;
@@ -61,11 +62,11 @@ public class Produto {
     }
 
     public String getTextoDescritivo() {
-        return textoDescritivo;
+        return texto_descritivo;
     }
 
-    public void setTextoDescritivo(String textoDescritivo) {
-        this.textoDescritivo = textoDescritivo;
+    public void setTextoDescritivo(String texto_descritivo) {
+        this.texto_descritivo = texto_descritivo;
     }
 
     public String getCor() {
@@ -84,11 +85,11 @@ public class Produto {
         this.fabricante = fabricante;
     }
 
-    public double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 

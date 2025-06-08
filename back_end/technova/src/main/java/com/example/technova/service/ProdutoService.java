@@ -35,7 +35,11 @@ public class ProdutoService {
 
     //cadastro de produtos
     public ProdutoDto createProduto(ProdutoDto produtoDto){
+        System.out.println("DTO.textoDescritivo = " + produtoDto.getTextoDescritivo());
+
         Produto produto = produtoDto.toProduto();
+
+        System.out.println("Produto.textoDescritivo = " + produto.getTextoDescritivo());
 
         for (ImagemProduto imagem : produto.getImagens()){
             imagem.setProduto(produto);

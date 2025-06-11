@@ -1,43 +1,24 @@
-# AtividadeHackaton
+create database if not exists technova;
+use technova;
 
 
-# TechNova - API de Produtos
-
-API REST para gerenciamento de produtos, incluindo cadastro com múltiplas imagens.
-
----
-
-## Tecnologias Utilizadas
-
-- Java 21
-- Spring Boot
-- Hibernate / JPA
-- MySQL
-- Jackson (para JSON)
-- Postman (testes)
-
----
-
-## Configuração do Banco de Dados
-
-Banco MySQL com tabela `produtos`:
-
-```sql
-CREATE TABLE produtos (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  texto_descritivo VARCHAR(250) NOT NULL,
-  cor VARCHAR(50) NOT NULL,
-  fabricante VARCHAR(100) NOT NULL,
-  preco DECIMAL(10, 2) NOT NULL,
-  quantidade INT NOT NULL
+-- Criar tabela 'produtos'
+CREATE TABLE if not exists produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    textoDescritivo VARCHAR(250) NOT NULL,
+    cor VARCHAR(50) NOT NULL,
+    fabricante VARCHAR(100) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    quantidade INT NOT NULL
 );
 
-CREATE TABLE imagens_produto (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  url_imagem VARCHAR(255),
-  produto_id BIGINT,
-  CONSTRAINT fk_produto FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE
+-- Criar tabela 'imagens_produto' para armazenar as URLs das imagens
+CREATE TABLE if not exists imagens_produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    url_imagem VARCHAR(250) NOT NULL,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE
 );
 
 -- Inserir dados na tabela 'produtos'
@@ -95,3 +76,4 @@ VALUES
     (12, 'https://i.ibb.co/R47938fc/01.jpg'),
     (12, 'https://i.ibb.co/fV3CvpfR/02.jpg'),
     (12, 'https://i.ibb.co/ccdSz1n9/03.jpg');
+

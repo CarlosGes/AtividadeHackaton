@@ -1,5 +1,9 @@
 # AtividadeHackaton
-
+grupo: 
+Carlos
+Abner
+Gabriel Rodriges
+Guilherme Augusto
 
 # TechNova - API de Produtos
 

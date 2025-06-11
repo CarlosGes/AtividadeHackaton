@@ -41,7 +41,7 @@ CREATE TABLE imagens_produto (
 );
 
 -- Inserir dados na tabela 'produtos'
-INSERT INTO produtos (nome, textoDescritivo, cor, fabricante, preco, quantidade)
+INSERT INTO produtos (nome, texto_descritivo, cor, fabricante, preco, quantidade)
 VALUES 
     ('Fone com Microfone', 'Fone de Ouvido com Microfone, Loop Way, P3', 'Branco', 'Philips', 39.99, 27),
     ('Mouse Gamer', 'Mouse Gamer Óptico Nitro 7200 DPI, 6 Botões, USB', 'Preto', 'Acer', 79.99, 18),

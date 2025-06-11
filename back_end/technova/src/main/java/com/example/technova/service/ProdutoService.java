@@ -26,8 +26,7 @@ public class ProdutoService {
     public Optional<ProdutoDto> getById(Long id){
         Optional<Produto> produtoOptional = produtoRepository.findById(id);
         if(produtoOptional.isPresent()){
-            ProdutoDto produtoDto = new ProdutoDto();
-            return Optional.of(produtoDto.fromProduto(produtoOptional.get()));
+            return Optional.of(ProdutoDto.fromProduto(produtoOptional.get()));
         } else {
             return Optional.empty();
         }
@@ -90,7 +89,7 @@ public class ProdutoService {
     public Optional<Boolean> removerImagem(Long id, String url_imagem) {
         return produtoRepository.findById(id)
                 .map(produto -> {
-                    boolean removido = produto.getImagens().remove(url_imagem);
+                    boolean removido = produto.getImagens().removeIf(imagem -> imagem.getUrl_imagem().equals(url_imagem));
                     if (removido) {
                         produtoRepository.save(produto);
                     }

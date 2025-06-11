@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta de Produtos</title>
+  <link rel="stylesheet" href="/css/produtos.css" />
+  <script src="/js/produtos.js" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-container">
+      <h1 class="logo">TechNova</h1>
+      <nav class="nav-links">
+        <a href="/paginas/cadastro.html">Cadastrar</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Catálogo de Produtos</h1>
+    
+    <div>
+      <span id="productCount">0</span> produtos encontrados
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Pesquisar produtos..." />
+      <button onclick="filterProducts()">Buscar</button>
+    </div>
+
+    <div id="loading" class="loading">Carregando produtos...</div>
+    <div id="error" class="error" style="display: none;"></div>
+
+    <div id="productGrid" class="product-grid"></div>
+  </div>
+</body>
+</html>

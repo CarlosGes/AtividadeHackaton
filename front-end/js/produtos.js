@@ -56,8 +56,7 @@ function displayProducts(products) {
                 </div>
                 
                 <div class="product-actions">
-                    <button class="btn-edit" onclick="editProduct(${product.id})">Editar</button>
-                    <button class="btn-delete" onclick="deleteProduct(${product.id})">Excluir</button>
+                    <button class="btn-edit" onclick="editProduct(${product.id})">Comprar</button>
                 </div>
             </div>
         `;
@@ -78,14 +77,8 @@ function displayProducts(products) {
         }
         
         // Funções para editar/excluir (pode implementar depois)
-        function editProduct(id) {
-            alert(`Editar produto ID: ${id}`);
-            // window.location.href = `editar.html?id=${id}`;
+        function editProduct(nome) {
+            alert(`Produto comprado: ${nome}`);
+            // window.location.href = `editar.html?nome=${nome}`;
         }
         
-        function deleteProduct(id) {
-            if (confirm(`Tem certeza que deseja excluir o produto ${id}?`)) {
-                // Implemente a chamada DELETE aqui
-                alert(`Produto ${id} excluído (simulação)`);
-            }
-        }
